@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "252779153513",
+    "firebase_url": "https://web7-wms-app.firebaseio.com",
+    "project_id": "web7-wms-app",
+    "storage_bucket": "web7-wms-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252779153513:android:fb3587470a1e5b04",
+        "android_client_info": {
+          "package_name": "com.wms_inventario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252779153513-8mogcc9domo1n6p7dh6bv1tdiq07bhvp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wms_inventario",
+            "certificate_hash": "29affab81898c9e131de0c9991ca7a8a92911047"
+          }
+        },
+        {
+          "client_id": "252779153513-7n68rt8cj4trdp8iok3a76858srg2hg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx9INWNSTnSQuE772i97nPbziL609-c9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252779153513-7n68rt8cj4trdp8iok3a76858srg2hg7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
