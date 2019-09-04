@@ -960,13 +960,6 @@
     "@react-native-firebase/app-types" "0.3.0"
     opencollective-postinstall "^2.0.1"
 
-"@react-native-firebase/ml-vision@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/ml-vision/-/ml-vision-0.3.0.tgz#e61063314ac625ab946100c444bd01920b59ac45"
-  integrity sha512-S30v8LhvOmr+O1CgNw9u8f282LR99XPcvPwpQ6meIV3Z8XPh578wIX77qSnrHJ8iYsmkolEbXqEjjM4AYNd1Sg==
-  dependencies:
-    "@react-native-firebase/app-types" "0.3.0"
-
 "@react-navigation/core@~3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.5.0.tgz#73d1a12448e2bd71855e0080b95a7f51ede0cd9e"
@@ -6075,10 +6068,11 @@ react-native-barcode-scanner-google@^1.4.2:
   resolved "https://registry.yarnpkg.com/react-native-barcode-scanner-google/-/react-native-barcode-scanner-google-1.4.2.tgz#48b781b9c0c00847b4c3fc2d5b2b3bab1ba43ea8"
   integrity sha512-yguVVmvILuIkmIrdll4xtdXx8zQ44oyS4oRL+1Bqri1cnDe67ohQsfQhV8rCUpBIUsllzfvBbDv2WNyPXM/MZw==
 
-react-native-firebase-mlkit@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/react-native-firebase-mlkit/-/react-native-firebase-mlkit-0.6.2.tgz#4fddd7f493ba1ff03c3f6b5240599ad4176bc9b9"
-  integrity sha512-ISHkwbajT+OCMGqxYXApQZFPyx6zFP+qduMambHXENZfi5g5ybHmx6Kly9kEhonoLeqvTtA6nERuH3kJhamYHw==
+"react-native-camera@git+https://git@github.com/react-native-community/react-native-camera.git":
+  version "3.3.2"
+  resolved "git+https://git@github.com/react-native-community/react-native-camera.git#654f1b221f328c372895fd4c7ee20a1ceae5dd0c"
+  dependencies:
+    prop-types "^15.6.2"
 
 react-native-gesture-handler@^1.3.0:
   version "1.4.1"
