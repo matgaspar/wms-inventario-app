@@ -3,6 +3,7 @@ import { createAppContainer, createStackNavigator, createSwitchNavigator } from 
 import Auth from './pages';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import Contagem from './pages/Contagem';
 import Consultar from './pages/Consultar';
 import Camera from './pages/Camera';
 import Inventario from './pages/Inventario';
@@ -12,6 +13,7 @@ import Produtos from './pages/Produtos';
 const SignedInScreens = createStackNavigator(
   {
     Home,
+    Contagem,
     Consultar,
     Camera,
     Inventario,
@@ -27,7 +29,7 @@ const SignedInScreens = createStackNavigator(
         backgroundColor: '#000',
       },
     },
-    mode: 'modal',
+    mode: 'card',
   },
 );
 

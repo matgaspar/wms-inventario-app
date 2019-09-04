@@ -71,7 +71,7 @@ function Produtos({ navigation }) {
         <View style={styles.container}>
             <View style={styles.filter}>
                 <RNPickerSelect 
-                    useNativeAndroidPickerStyle={false}
+                    // useNativeAndroidPickerStyle={false}
                     placeholder={{ label: 'Filtrar por Rua', value: '' }}
                     onValueChange={(val) => setLocal(val)}
                     onClose={filtro}

@@ -1,1 +1,1 @@
-# wms_inventario
+# wms-inventario-app

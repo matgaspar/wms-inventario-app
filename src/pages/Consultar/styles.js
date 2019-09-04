@@ -13,6 +13,19 @@ const styles = StyleSheet.create({
     marginVertical: 40,
     resizeMode: 'stretch',
   },
+  header: {
+    height: 200,
+    // flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerIcon: {
+    marginRight: 10,
+  },
+  headerTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
   inputForm: {
     flexDirection: 'row',
     alignItems: 'center',

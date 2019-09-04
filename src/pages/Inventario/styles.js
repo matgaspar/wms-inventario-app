@@ -69,6 +69,20 @@ const styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
   },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    backgroundColor: 'rgba(0, 24, 68,0.8)',
+    // backgroundColor: 'rgba(255, 255, 255,0.7)',
+    borderRadius: 15,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

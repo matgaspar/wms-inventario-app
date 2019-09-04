@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, View, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, Modal, 
-  ActivityIndicator, StyleSheet } from 'react-native';
+  ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
 import Picker from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-community/async-storage';
 import api from '../../services/api';
 
 import styles from './styles';
-import config, { 
-  KEY_ID, KEY_NOME, KEY_EMAIL, KEY_LOGIN, KEY_AUDITOR, 
-  KEY_ADMIN, KEY_ATIVO, KEY_EMPRESA 
-} from '../../config';
+import config from '../../config';
 
 export default Login = ({ navigation }) => {
 
 const [loading, setLoading] = useState(true);
-const [login, setLogin] = useState('matheus');
+const [login, setLogin] = useState('antonio');
 const [senha, setSenha] = useState('123');
 const [empresas, setEmpresas] = useState([]);
-const [empresa, setEmpresa] = useState(0);
+const [empresa, setEmpresa] = useState(1);
 const [showPass, setShowPass] = useState(false);
 
 const handleLogin = async () => {
@@ -26,24 +22,20 @@ const handleLogin = async () => {
     if (empresa && login && senha){
       setLoading(true);
       const data = await api.post('/login', { empresa, login, senha })
-      .then(({data}) => {
+      .then(async ({ data }) => {
         if(data.success){
-          config.setToken(data.token);
-          AsyncStorage.setItem(KEY_EMPRESA, empresa);
-          AsyncStorage.setItem(KEY_ID, data.usuario.id);
-          AsyncStorage.setItem(KEY_NOME, data.usuario.nome);
-          AsyncStorage.setItem(KEY_LOGIN, data.usuario.login);
-          AsyncStorage.setItem(KEY_EMAIL, data.usuario.email);
-          AsyncStorage.setItem(KEY_AUDITOR, data.usuario.auditor);
-          AsyncStorage.setItem(KEY_ADMIN, data.usuario.admin);
-          AsyncStorage.setItem(KEY_ATIVO, data.usuario.ativo);
+          await config.setToken(data.token);
+          await config.setUsuario(data.usuario);
+          await config.setEmpresa(data.usuario.Empresas[0]);
         }else{
           Alert.alert('Falha!', data.error);
         }
         setLoading(false);
         return data.success;
       })
-      .then(data => data && navigation.navigate('SignedIn'))
+      .then(data => {
+        if(data) navigation.navigate('SignedIn');
+      });
     }else{
       Alert.alert('Atenção!', 'Preencha todos os campos necessários!');
     }
@@ -62,7 +54,7 @@ useEffect(() => {
           const emp = [];
           data.data.map(empresa => {
             const { nome, id } = empresa;
-            emp.push({ label: nome, value: id });
+            emp.push({ label: nome, value: parseInt(id) });
           });
           setEmpresas(emp);
           setLoading(false);
@@ -76,15 +68,17 @@ useEffect(() => {
     }
   }
   handleEmpresas();
+
+  return () => {
+    setLoading(false);
+  }
 }, []);
 
-const showPassword = () => {
-  setShowPass(!showPass);
-}
-
   return (
-    <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <>
+    <StatusBar backgroundColor='#001844' barStyle='light-content' />
+    <View style={styles.container}>
+      <View style={{ paddingVertical: 70, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ fontSize: 50, color: '#FFF', fontWeight: 'bold' }}>WEB7 ONLINE</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <Icon name='ios-archive' color='#FFF' size={40} />
@@ -95,7 +89,7 @@ const showPassword = () => {
         <Text style={styles.label}>EMPRESA</Text>
         <Picker 
           style={pickerSelectStyles}
-          useNativeAndroidPickerStyle={false}
+          // useNativeAndroidPickerStyle={false}
           placeholder={{ label: 'SELECIONE A EMPRESA', value: 0 }}
           items={empresas}
           value={empresa}
@@ -106,7 +100,7 @@ const showPassword = () => {
         <Text style={styles.label}>SENHA</Text>
         <View style={{ justifyContent: 'center' }}>
           <TextInput value={senha} secureTextEntry={!showPass} style={[styles.txtInput, {position: 'relative'}]} onChangeText={setSenha} />
-          <TouchableOpacity onPress={showPassword} style={{ position: 'absolute', right: 0, bottom: 20 }}>
+          <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{ position: 'absolute', right: 0, bottom: 20 }}>
             <Icon name={showPass ? 'ios-eye' : 'ios-eye-off'} color='#FFF' size={30} />
           </TouchableOpacity>
         </View>
@@ -121,7 +115,8 @@ const showPassword = () => {
           </View>
         </View>
       </Modal>
-    </KeyboardAvoidingView>
+    </View>
+    </>
   );
 }
 
