@@ -1,6 +1,7 @@
 package com.wms_inventario;
 
 import android.app.Application;
+// import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.facebook.react.PackageList;
@@ -13,6 +14,7 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.List;
 
+// extends Application
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -46,4 +48,11 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
   }
+/*
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
+  }
+*/
 }

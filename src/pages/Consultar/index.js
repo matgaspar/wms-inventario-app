@@ -18,7 +18,7 @@ import config from "../../config";
 function Consultar({ navigation }) {
   const [inventario, setInventario] = useState({});
   const [contagem, setContagem] = useState({});
-  const [codigo, setCodigo] = useState(22743);
+  const [codigo, setCodigo] = useState('');
   const [load, setLoad] = useState(false);
 
   useEffect(() => {

@@ -2,19 +2,26 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "28.0.3"
-        minSdkVersion = 21 //16
+        // buildToolsVersion = "28.0.3"
+        // minSdkVersion = 21 //16
+        // compileSdkVersion = 28
+        // targetSdkVersion = 28
+        // supportLibVersion = "28.0.0"
+
+        // ROCKETSEAT TUTORIAL
+        buildToolsVersion = "28.0.2"
+        minSdkVersion = 16
         compileSdkVersion = 28
-        targetSdkVersion = 28
+        targetSdkVersion = 27
         supportLibVersion = "28.0.0"
 
-        // buildToolsVersion           = "28.0.3"
+        // buildToolsVersion           = "23.0.1"
         // minSdkVersion = 16 //21
-        // compileSdkVersion           = 28
-        // targetSdkVersion            = 28
+        // compileSdkVersion           = 25
+        // targetSdkVersion            = 25
         // supportLibVersion           = "27.1.0"
-        googlePlayServicesVersion   = "12.0.1"
-        googlePlayServicesVisionVersion = "15.0.2"
+        // googlePlayServicesVersion   = "12.0.1"
+        // googlePlayServicesVisionVersion = "15.0.2"
     }
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal 
@@ -49,13 +56,13 @@ allprojects {
         google()
     }
 }
-
+/*
 subprojects {
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'com.android.support'
               && !details.requested.name.contains('multidex') ) {
-                details.useVersion "26.0.2"
+                details.useVersion "27.0.1"
             }
         }
     }
@@ -63,9 +70,10 @@ subprojects {
     afterEvaluate {
         project -> if (project.hasProperty("android")) {
             android {
-                compileSdkVersion 26
-                buildToolsVersion '26.0.2'
+                compileSdkVersion 27
+                buildToolsVersion '27.0.1'
             }
         }
     }
 }
+*/

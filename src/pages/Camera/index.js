@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, Alert, ActivityIndicator, TouchableOpacity, Text } from "react-native";
+import { View, Alert, ActivityIndicator, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Icons from "react-native-vector-icons/Ionicons";
 import api from '../../services/api';
-import { RNCamera } from 'react-native-camera';
+import { RNCamera, Point } from 'react-native-camera';
 
 function Camera({ navigation }) {
   const [codigo, setCodigo] = useState(0);
 
-  /* useEffect(() => {
+  useEffect(() => {
 
         return () => {
-
+          setCodigo(0);
         }
-    }, []); */
+    }, []);
     
   const loadProduto = async (ean = codigo) => {
     try {
@@ -22,18 +22,18 @@ function Camera({ navigation }) {
           .then(({ data }) => {
             if (data.id) {
               navigation.navigate("Inventario", { produtoItem: data });
-              resumeScanner();
+              // this.camera.resumePreview();
             } else {
-              resumeScanner();
+              // this.camera.resumePreview();
               Alert.alert("Atenção!", "Produto não encontrado!");
             }
           })
       } else {
-        resumeScanner();
+        // this.camera.resumePreview();
       }
     } catch (err) {
-        resumeScanner();
-        Alert.alert("Falha!", err.message);
+      // this.camera.resumePreview();
+      Alert.alert("Falha!", err.message);
     }
   };
 
@@ -42,10 +42,36 @@ function Camera({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <TouchableOpacity onPress={handleBarcodeReader}>
-        <Text>Capturar</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <RNCamera
+        ref={ref => { this.camera = ref; }}
+        autoFocus={RNCamera.Constants.AutoFocus.on}
+        zoom={0.5}
+        // focusDepth={0.9}
+        autoFocusPointOfInterest={{ x: 71.37254901960785, y: 236.07843524217606 }}
+        type={RNCamera.Constants.Type.back}
+        flashMode={RNCamera.Constants.FlashMode.auto} 
+        style={styles.preview}
+        // androidCameraPermissionOptions={{
+        //   title: 'Permission to use camera',
+        //   message: 'We need your permission to use your camera',
+        //   buttonPositive: 'Ok',
+        //   buttonNegative: 'Cancel',
+        // }}
+        onBarCodeRead={(data) => console.log(data)}
+        // onGoogleVisionBarcodesDetected={(data) => {
+        //   const { barcodes, ...props } = data;
+        //   if(barcodes.length > 0 && codigo === 0){
+        //     let barcode = barcodes[0].data;
+        //     setCodigo(barcode);
+        //     console.log(barcodes[0]);
+        //     console.log(props);
+        //     loadProduto(barcode);
+        //     // this.camera.pausePreview();
+        //   }
+        // }}
+      >
+      </RNCamera>
     </View>
   );
 }
@@ -66,3 +92,25 @@ Camera.navigationOptions = ({ navigation }) => ({
 });
 
 export default Camera;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black',
+  },
+  preview: {
+    flex: 1,
+    // justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20,
+  },
+});

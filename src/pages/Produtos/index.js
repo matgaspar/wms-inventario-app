@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import ModalSelector from 'react-native-modal-selector';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from './styles';
@@ -17,8 +17,8 @@ function Produtos({ navigation }) {
 
     const loadPage = async (pageNumber = page, shouldRefresh = false) => {
         const url = [];
-        if(local)
-            url.push(`local_like=${local}`);
+        if(local.key)
+            url.push(`local_like=${local.key}`);
         if(query)
             url.push(`q=${query}`);
         setLoad(true);
@@ -70,24 +70,35 @@ function Produtos({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.filter}>
-                <RNPickerSelect 
+                <ModalSelector 
+                data={[
+                    { label: 'RUA A', key: 'A'},
+                    { label: 'RUA B', key: 'B'},
+                    { label: 'RUA C', key: 'C'},
+                    { label: 'RUA D', key: 'D'},
+                    { label: 'RUA E', key: 'E'},
+                    { label: 'RUA F', key: 'F'},
+                    { label: 'RUA G', key: 'G'},
+                    { label: 'RUA H', key: 'H'},
+                    { label: 'RUA I', key: 'I'},
+                    { label: 'RUA P', key: 'P'},
+                ]}
+                initValue='Filtrar por Rua'
+                supportedOrientations={['landscape']}
+                accessible={true}
+                scrollViewAccessibilityLabel={'Scrollable options'}
+                cancelButtonAccessibilityLabel={'Cancel Button'}
+                onChange={(rua) => setLocal(rua)}
+                onModalClose={filtro}
+                cancelText='CANCELAR'
+                cancelTextStyle={{ fontSize: 15, paddingVertical: 10 }}
+                sectionTextStyle={{ fontWeight: 'bold', fontSize: 20, color: '#666' }}
+
                     // useNativeAndroidPickerStyle={false}
-                    placeholder={{ label: 'Filtrar por Rua', value: '' }}
-                    onValueChange={(val) => setLocal(val)}
-                    onClose={filtro}
-                    value={local}
-                    items={[
-                        { label: 'RUA A', value: 'A'},
-                        { label: 'RUA B', value: 'B'},
-                        { label: 'RUA C', value: 'C'},
-                        { label: 'RUA D', value: 'D'},
-                        { label: 'RUA E', value: 'E'},
-                        { label: 'RUA F', value: 'F'},
-                        { label: 'RUA G', value: 'G'},
-                        { label: 'RUA H', value: 'H'},
-                        { label: 'RUA I', value: 'I'},
-                        { label: 'RUA P', value: 'P'},
-                    ]}
+                    // placeholder={{ label: 'Filtrar por Rua', value: '' }}
+                    // onValueChange={(val) => setLocal(val)}
+                    // onClose={filtro}
+                    // value={local}
                 />
 
                 <TouchableOpacity

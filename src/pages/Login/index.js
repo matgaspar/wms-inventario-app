@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, View, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, Modal, 
+import { Alert, View, Switch, Text, TextInput, TouchableOpacity, Modal, 
   ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
-import Picker from 'react-native-picker-select';
+import ModalSelector from 'react-native-modal-selector';
 import Icon from 'react-native-vector-icons/Ionicons';
 import api from '../../services/api';
 
@@ -11,17 +11,17 @@ import config from '../../config';
 export default Login = ({ navigation }) => {
 
 const [loading, setLoading] = useState(true);
-const [login, setLogin] = useState('antonio');
-const [senha, setSenha] = useState('123');
+const [login, setLogin] = useState('');
+const [senha, setSenha] = useState('');
 const [empresas, setEmpresas] = useState([]);
 const [empresa, setEmpresa] = useState(1);
 const [showPass, setShowPass] = useState(false);
 
 const handleLogin = async () => {
   try{
-    if (empresa && login && senha){
+    if (empresa.key && login && senha){
       setLoading(true);
-      const data = await api.post('/login', { empresa, login, senha })
+      const data = await api.post('/login', { empresa: empresa.key, login, senha })
       .then(async ({ data }) => {
         if(data.success){
           await config.setToken(data.token);
@@ -52,9 +52,17 @@ useEffect(() => {
       .then(({ data }) => {
         if(data.success){
           const emp = [];
-          data.data.map(empresa => {
+          emp.push({ label: "EMPRESAS", section: true, key: 0 })
+          data.data.map((empresa, idx) => {
+            console.log(idx);
             const { nome, id } = empresa;
-            emp.push({ label: nome, value: parseInt(id) });
+            const { borderTopWidth, ...propsOption } = selectStyles.option;
+            const style = (idx === 0) ? propsOption : selectStyles.option;
+            emp.push({ 
+              label: nome, 
+              key: parseInt(id), 
+              component: <Text style={style}>{nome}</Text> 
+            });
           });
           setEmpresas(emp);
           setLoading(false);
@@ -87,14 +95,22 @@ useEffect(() => {
       </View>
       <View style={{ flex: 1 }}>
         <Text style={styles.label}>EMPRESA</Text>
-        <Picker 
-          style={pickerSelectStyles}
-          // useNativeAndroidPickerStyle={false}
-          placeholder={{ label: 'SELECIONE A EMPRESA', value: 0 }}
-          items={empresas}
-          value={empresa}
-          onValueChange={val => setEmpresa(val)}
-        />
+        <ModalSelector 
+          data={empresas}
+          initValue='SELECIONE A EMPRESA'
+          supportedOrientations={['landscape']}
+          accessible={true}
+          scrollViewAccessibilityLabel={'Scrollable options'}
+          cancelButtonAccessibilityLabel={'Cancel Button'}
+          onChange={(empresa) => setEmpresa(empresa)}
+          cancelText='CANCELAR'
+          cancelTextStyle={{ fontSize: 15, paddingVertical: 10 }}
+          sectionTextStyle={{ fontWeight: 'bold', fontSize: 20, color: '#666' }}
+        >
+        <TextInput style={styles.txtInput} editable={false} placeholderTextColor='#FFF'
+        placeholder="SELECIONE A EMPRESA" value={empresa.label} />
+
+        </ModalSelector>
         <Text style={styles.label}>LOGIN</Text>
         <TextInput style={styles.txtInput} value={login} onChangeText={setLogin} />
         <Text style={styles.label}>SENHA</Text>
@@ -120,20 +136,8 @@ useEffect(() => {
   );
 }
 
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    // borderRadius: 4,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    paddingRight: 30, // to ensure the text is never behind the icon
-    fontSize: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#FFF',
-    color: '#FFF',
-    marginBottom: 10,
-  },
+const selectStyles = StyleSheet.create({
   inputAndroid: {
-    // borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 10,
     paddingRight: 30, // to ensure the text is never behind the icon
@@ -142,5 +146,13 @@ const pickerSelectStyles = StyleSheet.create({
     borderBottomColor: '#FFF',
     color: '#FFF',
     marginBottom: 10,
+  },
+  option: { 
+    paddingTop: 15,
+    borderTopWidth: 1, 
+    borderTopColor: '#B6B6B6', 
+    fontSize: 15, 
+    alignItems: 'center', 
+    color: '#2786F3' 
   },
 });
